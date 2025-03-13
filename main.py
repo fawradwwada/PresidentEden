@@ -25,8 +25,9 @@ logger = logging.getLogger(__name__)
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt2")  # Default to "gpt2" model
 tokenizer = GPT2Tokenizer.from_pretrained(MODEL_NAME)
 model = GPT2LMHeadModel.from_pretrained(MODEL_NAME)
-generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer, device=-1)
 logger.info(f"Loaded model: {MODEL_NAME}")
+
 
 class Prompt(BaseModel):
     text: str
