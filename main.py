@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Load model (default: "mistralai/Mistral-7B-Instruct")
-MODEL_NAME = os.getenv("MODEL_NAME", "mistralai/Mistral-7B-Instruct")
+MODEL_NAME = os.getenv("MODEL_NAME", "tiiuae/falcon-7b-instruct")
 generator = pipeline("text-generation", model=MODEL_NAME)
 logger.info(f"Loaded model: {MODEL_NAME}")
 
