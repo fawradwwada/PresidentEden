@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.env
+*.venv
+
+# Virtual environments
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# Logs and OS-specific files
+logs/
+*.log
+.DS_Store
+Thumbs.db
+
+# Model cache (if using Hugging Face)
+~/.cache/
+~/.huggingface/
+
+# Railway-specific files (optional)
+.railway/
