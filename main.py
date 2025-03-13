@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from transformers import pipeline
+from transformers import pipeline, GPT2LMHeadModel, GPT2Tokenizer
 import os
 import logging
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,9 +21,11 @@ app.add_middleware(
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Load model (default: "mistralai/Mistral-7B-Instruct")
-MODEL_NAME = os.getenv("MODEL_NAME", "tiiuae/falcon-7b-instruct")
-generator = pipeline("text-generation", model=MODEL_NAME)
+# Load GPT-2 model and tokenizer
+MODEL_NAME = os.getenv("MODEL_NAME", "gpt2")  # Default to "gpt2" model
+tokenizer = GPT2Tokenizer.from_pretrained(MODEL_NAME)
+model = GPT2LMHeadModel.from_pretrained(MODEL_NAME)
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 logger.info(f"Loaded model: {MODEL_NAME}")
 
 class Prompt(BaseModel):
@@ -41,4 +43,3 @@ async def generate_text(prompt: Prompt):
 @app.get("/")
 def home():
     return {"message": "LLM API is running!"}
-
