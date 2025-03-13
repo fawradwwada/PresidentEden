@@ -11,23 +11,21 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust for security in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Load GPT-2 model and tokenizer
-MODEL_NAME = os.getenv("MODEL_NAME", "gpt2")  # Default to "gpt2" model
+# Load DistilGPT-2 model and tokenizer (smaller version of GPT-2)
+MODEL_NAME = os.getenv("MODEL_NAME", "distilgpt2")  # Use distilgpt2 as the default
 tokenizer = GPT2Tokenizer.from_pretrained(MODEL_NAME)
 model = GPT2LMHeadModel.from_pretrained(MODEL_NAME)
-generator = pipeline("text-generation", model=model, tokenizer=tokenizer, device=-1)
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer, device=-1)  # Run on CPU
 logger.info(f"Loaded model: {MODEL_NAME}")
-
 
 class Prompt(BaseModel):
     text: str
